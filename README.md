@@ -54,7 +54,7 @@ Before setting up the `MethylResolver` package, users should have `R` version 3.
 
 ```r
 install.packages('devtools')
-devtools::install_github(repo = 'darneson/MethylResolver')
+devtools::install_github(repo = 'omnideconv/MethylResolver')
 library(MethylResolver)
 ```
 
