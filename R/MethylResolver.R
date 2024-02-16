@@ -1,6 +1,5 @@
 #Least Trimmed Squares Regression (LTS Regression)
-MethylResolver <- function(methylMix = NULL, methylSig = MethylSig, betaPrime = TRUE, outputPath = "./",
-                           outputName = "MethylResolver", doPar = FALSE, numCores = 1,
+MethylResolver <- function(methylMix = NULL, methylSig = MethylSig, betaPrime = TRUE, doPar = FALSE, numCores = 1,
                            alpha = seq(0.5,0.9,by = 0.05), absolute = TRUE, purityModel = RFmodel) {
   
   i <- NULL ## To please R CMD check
@@ -28,6 +27,7 @@ MethylResolver <- function(methylMix = NULL, methylSig = MethylSig, betaPrime = 
       
       #Set up parallel processing if required
       ######################################################
+      snow::setDefaultClusterOptions(type='SOCK')
       if(doPar==TRUE){
         #auto detect number of available cores
         if(numCores == "auto"){
@@ -141,13 +141,12 @@ MethylResolver <- function(methylMix = NULL, methylSig = MethylSig, betaPrime = 
         ltsModel = cbind(ltsModel,absoluteFractions)
       }
       
-      #write to file
-      write.table(ltsModel,file=paste0(outputPath,outputName,".txt"),quote = F, sep="\t")
-      
       cat("\nCompleted LTS Deconvolution For This Mixture...\n")
       #shut down parallel processing
       close(pb)
       snow::stopCluster(cl)
+      
+      return(ltsModel)
     }
   }
 }
