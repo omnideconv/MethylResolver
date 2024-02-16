@@ -145,5 +145,5 @@ MethylResolver <- function(methylMix = NULL, methylSig = MethylSig, betaPrime = 
     
     return(ltsModel)
   }
-  }
+  
 }
